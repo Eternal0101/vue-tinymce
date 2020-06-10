@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <div v-html="content"></div>
     <tinymce-editor ref="editor"
         v-model="content"
         :language="language"
@@ -7,7 +8,7 @@
         @input="getInput"
     >
     </tinymce-editor>
-    <div v-html="content"></div>
+
   </div>
 </template>
 

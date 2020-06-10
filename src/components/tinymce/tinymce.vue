@@ -85,7 +85,7 @@
             value (newValue) {
                 this.editorContent = newValue;
             },
-            myValue (newValue) {
+            editorContent (newValue) {
                 this.$emit('input', newValue);
             }
         }
