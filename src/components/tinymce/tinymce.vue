@@ -85,6 +85,7 @@
             value (newValue) {
                 this.editorContent = newValue;
             },
+            //监听内容变化，将得到的新的内容传给父组件
             editorContent (newValue) {
                 this.$emit('input', newValue);
             }
