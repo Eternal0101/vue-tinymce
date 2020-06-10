@@ -76,7 +76,6 @@
             }
         },
         mounted () {
-            //tinymce.init({});
         },
         methods: {
 
