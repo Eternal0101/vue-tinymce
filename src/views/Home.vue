@@ -7,7 +7,6 @@
         @input="getInput"
     >
     </tinymce-editor>
-    <div v-html="content"></div>
   </div>
 </template>
 

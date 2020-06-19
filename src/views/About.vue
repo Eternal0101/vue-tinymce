@@ -19,52 +19,52 @@
         tableData: [
           {
             productType: "纺织品",
-            price: 123,
+            productId:1,
             productName: '男装上衣',
             amount: 20,
             operate_number: "20180831142020",
-            price: "36.00",
+            price: "31.00",
             updateTime: "2018-08-31",
             operator: "小吴"
           },{
             productType: "纺织品",
-            price: 123,
+            productId:1,
             productName: '男装裤子',
             amount: 20,
             operate_number: "20180831142020",
-            price: "36.00",
+            price: "32.00",
             updateTime: "2018-08-31",
             operator: "小吴"
           },{
             productType: "饮料",
-            price: 123,
+            productId:2,
             productName: '康师傅冰红茶',
             amount: 20,
             operate_number: "20180823142020",
-            price: "36.00",
+            price: "33.00",
             updateTime: "2018-08-31",
             operator: "小吴"
           },{
             productType: "纺织品",
-            price: 223,
+            productId:1,
             productName: '男装裤子',
             amount: 10,
             operate_number: "20180821142020",
-            price: "36.00",
+            price: "34.00",
             updateTime: "2018-08-31",
             operator: "小王"
           },{
             productType: "绸缎",
-            price: 888,
+            productId:3,
             productName: '旗袍',
             amount: 200,
             operate_number: "20180821142020",
-            price: "36.00",
+            price: "35.00",
             updateTime: "2018-08-31",
             operator: "小吴"
           },{
             productType: "绸缎",
-            price: 123,
+            productId:3,
             productName: '席子',
             amount: 20,
             operate_number: "20180821142020",
@@ -79,13 +79,34 @@
       }
     },
     mounted() {
-      this.getOrderNumber()
+      this.getOrderNumber();
+      this.mergeData();
     },
     methods:{
+      //存储合并项
+      mergeData(){
+        let OrderObj={};
+        // 遍历商品数组，以productId为key，把相同的商品的索引放到一个数组里面
+        this.tableData.forEach((element,index)=>{
+
+          if(OrderObj[element.productId]){
+            OrderObj[element.productId].push(index);
+          }else{
+            OrderObj[element.productId] = [];
+            OrderObj[element.productId].push(index);
+          }
+        });
+        for(let k in OrderObj){
+          if(OrderObj[k].length>1){
+            this.OrderIndexArr.push(OrderObj[k]);
+          }
+        }
+      },
+      /*获取需要合并的数据*/
       getOrderNumber() {
         let OrderObj = {};
         this.tableData.forEach((element, index) => {
-          element.rowIndex = index
+          element.rowIndex = index;
           if (OrderObj[element.operate_number]) {
             OrderObj[element.operate_number].push(index);
           } else {
@@ -96,29 +117,22 @@
         // 将数组长度大于1的值 存储到this.OrderIndexArr（也就是需要合并的项）
         for (let k in OrderObj) {
           if (OrderObj[k].length > 1) {
-            this.OrderIndexArr.push(OrderObj[k])
+            this.OrderIndexArr.push(OrderObj[k]);
           }
         }
       },
       // 合并单元格
       objectSpanMethod({row,column,rowIndex,columnIndex}) {
-        if (columnIndex === 0 || columnIndex === 3 || columnIndex === 4) {
+        if(columnIndex === 0 || columnIndex === 3 || columnIndex === 4) {
           for (let i = 0; i < this.OrderIndexArr.length; i++) {
-            let element = this.OrderIndexArr[i]
+            let element = this.OrderIndexArr[i];
             for (let j = 0; j < element.length; j++) {
-              let item = element[j]
-              if (rowIndex == item) {
-                if (j == 0) {
-                  return {
-                    rowspan: element.length,
-                    colspan: 1
-                  }
-                } else if (j != 0) {
-                  return {
-                    rowspan: 0,
-                    colspan: 0
-                  }
-                }
+              let item = element[j];
+              if (rowIndex === item) {
+                return {
+                  rowspan: element.length,
+                  colspan: j===0?1:0
+                };
               }
             }
           }
