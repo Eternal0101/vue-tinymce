@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div>测试</div>
         <TreeChart :json="treeData" />
     </div>
 </template>
