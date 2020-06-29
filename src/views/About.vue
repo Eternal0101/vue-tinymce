@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <el-table ref="multipleTable" border :span-method="objectSpanMethod" :cell-class-name="tableRowClassName"
+   <!-- <el-table ref="multipleTable" border :span-method="objectSpanMethod" :cell-class-name="tableRowClassName"
               @cell-mouse-leave="cellMouseLeave"  @cell-mouse-enter="cellMouseEnter" :data="tableData" style="width: 80%;margin:0 auto;">
       <el-table-column label="商品类别" prop="productType" align="center"></el-table-column>
       <el-table-column label="商品价格" prop="price" align="center"></el-table-column>
@@ -8,12 +8,17 @@
       <el-table-column label="操作人员" prop="operator"  align="center"></el-table-column>
       <el-table-column label="更新时间" prop="updateTime" align="center">
       </el-table-column>
-    </el-table>
+    </el-table>-->
+    <v-tree></v-tree>
   </div>
 </template>
 <script>
+  import tree from './tree.vue';
   export default {
     name:'About',
+    components:{
+      'v-tree':tree
+    },
     data(){
       return {
         tableData: [
